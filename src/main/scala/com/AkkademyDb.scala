@@ -1,6 +1,6 @@
 package com.akkademy
 
-import akka.actor.{Actor, Status}
+import akka.actor.{Actor, ActorSystem, Status, Props}
 import akka.event.Logging
 import com.akkademy.messages.{SetRequest, GetRequest, KeyNotFoundException}
 import scala.collection.mutable.HashMap
@@ -23,4 +23,9 @@ class AkkademyDb extends Actor {
       } 
     case o => Status.Failure(new ClassNotFoundException)
   }
+}
+
+object Main extends App {
+  val system = ActorSystem("akkademy")
+  system.actorOf(Props[AkkademyDb], name = "akkademy-db")
 }
